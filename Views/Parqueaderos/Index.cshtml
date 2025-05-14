@@ -1,0 +1,357 @@
+@{
+    ViewData["Title"] = "Parqueaderos";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 text-gray-800">Parqueaderos</h1>
+        <div>
+            <a asp-action="Crear" class="btn btn-primary me-2">
+                <i class="fas fa-plus"></i> Nuevo Parqueadero
+            </a>
+            <a asp-controller="Dashboard" asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Volver
+            </a>
+        </div>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="parqueaderosTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Dirección</th>
+                            @if (User.IsInRole("SuperUsuario")) {
+                                <th>Empresa</th>
+                            }
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("Zonas")
+
+@section Scripts {
+    <script>
+        let listaPisos;
+        let parqueaderoId;
+        let tipoVehiculo = {
+            0 : 'Moto',
+            1 : 'Auto',
+            2 : 'Camioneta',
+            3 : 'Camión'
+        };
+        let estadoPlaza = {
+            0 : 'Libre',
+            1 : 'Ocupada',
+            2 : 'Reservada'
+        };
+
+        function eventButtonPisosZonas(event) {
+            let button = $(event.target);
+            parqueaderoId = $(button).closest('button').data('parqueadero-id');
+            cargarPisos();
+        }
+
+        function eventButtonAgregarPiso(event) {
+            $.post(`/api/Pisos/${parqueaderoId}`, function (data) {
+                cargarPisos();
+            });
+        }
+
+        function cargarPisos() {
+            if (!listaPisos) {
+                listaPisos = $('#pisos');
+            }
+            listaPisos.empty();
+            $.get(`/api/Pisos/${parqueaderoId}`, function (data) {
+                data.forEach(piso => {
+                    let zonasAgrupadas = _.groupBy(piso.zonas, 'tipoVehiculo');
+                    let zonasMapeadas = Object.entries(zonasAgrupadas).map(([tipoVehiculo, zonas]) => ({
+                        tipoVehiculo: tipoVehiculo,
+                        zonas: zonas
+                    }));
+                    listaPisos.append(
+                        `<li class="list-group-item" data-piso-id="${piso.id}">
+                            Piso ${piso.numero}
+                            <button type="button" data-piso-id="${piso.id}" class="btn btn-secondary btn-sm float-end" data-bs-toggle="modal" data-bs-target="#modalZonas">
+                                <i class="fas fa-plus"></i> Agregar Zona
+                            </button>
+                            ${piso.numero > 1 ? `
+                                <button type="button" class="btn btn-danger btn-eliminar-piso" data-piso-id="${piso.id}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            ` : ''}
+                            <div id="zonas-piso-${piso.id}" class="mt-2">
+                                ${piso.zonas.length === 0 
+                                    ? '<p class="text-muted">No hay zonas definidas</p>'
+                                    : `
+                                    <div class="zona-grupo">
+                                        ${zonasMapeadas.map(zona => `
+                                            <div class="card mb-2">
+                                                <div class="card-header py-1 px-2 bg-light">
+                                                    <strong>${tipoVehiculo[zona.tipoVehiculo]}</strong>
+                                                    <span class="badge bg-primary float-end">${zona.zonas.length} zonas</span>
+                                                </div>
+                                                <div class="card-body p-2">
+                                                    <div class="d-flex flex-wrap gap-2">
+                                                        ${zona.zonas.map(z => 
+                                                            `<span class="badge d-flex align-items-center ${z.estado === 0 ? 'bg-success' : z.estado === 1 ? 'bg-danger' : 'bg-warning text-dark'} cursor-pointer" 
+                                                                   data-bs-toggle="modal" 
+                                                                   data-bs-target="#modalEditarZona"
+                                                                   data-zona-id="${z.id}"
+                                                                   data-codigo="${z.codigo}"
+                                                                   data-nombre="${z.nombre}"
+                                                                   data-tipo-vehiculo="${z.tipoVehiculo}"
+                                                                   data-estado="${z.estado}">
+                                                                <i class="fas fa-parking me-1"></i>
+                                                                ${z.codigo} - ${z.nombre}
+                                                                <small class="ms-1">(${estadoPlaza[z.estado]})</small>
+                                                            </span>
+                                                        `).join('')}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>`
+                                }
+                            </div>
+                        </li>`
+                    );
+                });
+            }).fail(function(error) {
+                console.error('Error cargando pisos:', error);
+                listaPisos.html('<li class="list-group-item text-danger">Error al cargar los pisos</li>');
+            });
+        }
+
+        $(document).on('click', '[data-bs-target="#modalEditarZona"]', function() {
+            const zonaId = $(this).data('zona-id');
+            const pisoId = $(this).closest('[data-piso-id]').data('piso-id');
+            
+            $('#editarZonaId').val(zonaId);
+            $('#editarPisoId').val(pisoId);
+            $('#editarCodigo').val($(this).data('codigo'));
+            $('#editarNombre').val($(this).data('nombre'));
+            $('#editarTipoVehiculo').val($(this).data('tipo-vehiculo'));
+            $('#editarEstado').val($(this).data('estado'));
+        });
+        
+        $('#formEditarZona').on('submit', function(e) {
+            e.preventDefault();
+            const zonaId = $('#editarZonaId').val();
+            const pisoId = $('#editarPisoId').val();
+            const formData = {
+                Id: zonaId,
+                PisoId: pisoId,
+                Codigo: $('#editarCodigo').val(),
+                Nombre: $('#editarNombre').val(),
+                TipoVehiculo: parseInt($('#editarTipoVehiculo').val()),
+                Estado: parseInt($('#editarEstado').val())
+            }
+
+            $('#formEditarZona')[0].reset();
+            
+            $.ajax({
+                url: `/api/Zonas/${zonaId}`,
+                type: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function(response) {
+                    $('#modalEditarZona').modal('hide');
+                    cargarPisos();
+                    $("#modalPisos").modal('show');
+                },
+                error: function(error) {
+                    console.error('Error al actualizar la zona:', error);
+                }
+            });
+        });
+        
+        $('#btnEliminarZona').on('click', function() {
+            Swal.fire({
+                title: '¿Está seguro?',
+                text: '¿Desea eliminar la zona?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const zonaId = $('#editarZonaId').val();
+                    
+                    $.ajax({
+                        url: `/api/Zonas/${zonaId}`,
+                        type: 'DELETE',
+                        success: function(response) {
+                            $('#modalEditarZona').modal('hide');
+                            cargarPisos();
+                            $("#modalPisos").modal('show');
+                        },
+                        error: function(error) {
+                            console.error('Error al eliminar la zona:', error);
+                        }
+                    });
+                }
+            });
+        });
+
+        $('#modalZonas').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var pisoId = button.data('piso-id');
+            $('#formAgregarZona').data('piso-id', pisoId);
+        });
+
+        function validarFormulario() {
+            let valido = true;
+            $('.is-invalid').removeClass('is-invalid');
+            $('.invalid-feedback').remove();
+
+            const campos = [
+                { id: 'codigo', nombre: 'Código' },
+                { id: 'nombre', nombre: 'Nombre' },
+                { id: 'tipoVehiculo', nombre: 'Tipo de vehículo' }
+            ];
+
+            campos.forEach(campo => {
+                const $campo = $(`#${campo.id}`);
+                if (!$campo.val().trim()) {
+                    $campo.addClass('is-invalid');
+                    $campo.after(`<div class="invalid-feedback">El campo ${campo.nombre} es obligatorio</div>`);
+                    valido = false;
+                }
+            });
+
+            return valido;
+        }
+
+        $('#formAgregarZona').submit(function (event) {
+            event.preventDefault();
+            
+            if (!validarFormulario()) {
+                return false;
+            }
+
+            var zonaData = {
+                PisoId: $(this).data('piso-id'),
+                Codigo: $('#codigo').val().trim(),
+                Nombre: $('#nombre').val().trim(),
+                TipoVehiculo: parseInt($('#tipoVehiculo').val()) 
+            };
+
+            $('#formAgregarZona')[0].reset();
+            
+            $.ajax({
+                url: '/api/Zonas',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(zonaData),
+                success: function(data) {
+                    $('#modalZonas').modal('hide');
+                    cargarPisos();
+                    $("#modalPisos").modal('show');
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                    alert('Error al crear la zona: ' + (xhr.responseJSON?.mensaje || error));
+                }
+            });
+        });
+
+        $('input, select').blur(function() {
+            const $campo = $(this);
+            if (!$campo.val().trim()) {
+                $campo.addClass('is-invalid');
+                if ($campo.next('.invalid-feedback').length === 0) {
+                    const nombreCampo = $campo.attr('id');
+                    $campo.after(`<div class="invalid-feedback">El campo ${nombreCampo.charAt(0).toUpperCase() + nombreCampo.slice(1)} es obligatorio</div>`);
+                }
+            } else {
+                $campo.removeClass('is-invalid');
+                $campo.next('.invalid-feedback').remove();
+            }
+        });
+
+        $(document).ready(function () {
+            listaPisos = $('#pisos');
+            var isSuperUsuario = @Json.Serialize(User.IsInRole("SuperUsuario"));
+            var columns = [
+                { data: 'nombre' },
+                { data: 'direccion' }
+            ];
+
+            if (isSuperUsuario) {
+                columns.push({ data: 'empresa.nombre' });
+            }
+
+            columns.push({
+                data: 'id',
+                render: function (data) {
+                    return `
+                        <div class="btn-group" role="group">
+                            <a href="/Parqueaderos/Editar/${data}" class="btn btn-info btn-sm">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="/Parqueaderos/Eliminar/${data}" class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                            <button type="button" data-parqueadero-id="${data}" onclick="eventButtonPisosZonas(event)" class="btn btn-secondary btn-sm pisos-zonas" data-bs-toggle="modal" data-bs-target="#modalPisos">
+                                <i class="fas fa-layer-group"></i> 
+                            </button>
+                        </div>
+                    `;
+                }
+            });
+
+            $('#parqueaderosTable').DataTable({
+                ajax: {
+                    url: '/api/Parqueaderos',
+                    dataSrc: ''
+                },
+                columns: columns,
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json'
+                }
+            });
+
+            $(document).on('click', '.btn-eliminar-piso', function() {
+                const pisoId = $(this).data('piso-id');
+                const pisoNumero = $(this).closest('li').find('span:first').text().replace('Piso ', '');
+                
+                Swal.fire({
+                    title: '¿Está seguro?',
+                    text: `¿Desea eliminar el Piso ${pisoNumero}? Esta acción no se puede deshacer.`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: `/api/Pisos/${pisoId}`,
+                            type: 'DELETE',
+                            success: function(response) {
+                                cargarPisos();
+                                mostrarNotificacion('success', 'Éxito', 'Piso eliminado correctamente');
+                            },
+                            error: function(error) {
+                                console.error('Error al eliminar el piso:', error);
+                                mostrarNotificacion('error', 'Error', 'No se pudo eliminar el piso');
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+} 
