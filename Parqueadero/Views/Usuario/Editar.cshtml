@@ -1,0 +1,126 @@
+@using Parqueadero.Models
+@model Usuario
+
+@{
+    ViewData["Title"] = "Editar Usuario";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 text-gray-800">Editar Usuario</h1>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Volver
+        </a>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <form asp-action="Editar" id="editarUsuarioForm">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                
+                <div class="form-group mb-3">
+                    <label asp-for="Nombre" class="control-label"></label>
+                    <input asp-for="Nombre" class="form-control" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Correo" class="control-label"></label>
+                    <input asp-for="Correo" class="form-control" id="Correo" />
+                    <span asp-validation-for="Correo" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Rol" class="control-label"></label>
+                    <select asp-for="Rol" class="form-control" asp-items="ViewBag.Roles">
+                        <option value="">Seleccione un rol</option>
+                        <option value="1">Admin</option>
+                        <option value="2">Trabajador</option>
+                        <option value="3">Cliente</option>
+                    </select>
+                    <span asp-validation-for="Rol" class="text-danger"></span>
+                </div>
+
+                @if (User.IsInRole("SuperUsuario")) {
+                    <div class="form-group mb-3">
+                        <label asp-for="EmpresaId" class="control-label"></label>
+                        <select asp-for="EmpresaId" class="form-control" asp-items="ViewBag.Empresas">
+                            <option value="">Seleccione una empresa</option>
+                        </select>
+                    <span asp-validation-for="EmpresaId" class="text-danger"></span>
+                </div>
+                } else {
+                    <input type="hidden" asp-for="EmpresaId" value="@User.FindFirst("EmpresaId").Value"/>
+                }
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Guardar Cambios
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            const id = @ViewBag.Id;
+            let empresaId;
+            // Cargar datos del usuario
+            $.get(`/api/Usuarios/${id}`, function (usuario) {
+                $('#Id').val(usuario.id);
+                $('#Nombre').val(usuario.nombre);
+                $('#Correo').val(usuario.correo);
+                $('#Rol').val(usuario.rol);
+                $('#EmpresaId').val(usuario.empresaId);
+                empresaId = usuario.empresaId;
+            });
+
+            $.get('/api/Empresas', function(empresas) {
+                var select = $('#EmpresaId');
+                select.empty();
+                select.append($('<option></option>').val('').text('Seleccione una empresa'));
+                $.each(empresas, function(index, empresa) {
+                    select.append($('<option></option>').val(empresa.id).text(empresa.nombre));
+                });
+                // Seleccionar la empresa actual
+                select.val(empresaId);
+            });
+
+            $('#editarUsuarioForm').on('submit', function (e) {
+                e.preventDefault();
+                const usuario = {
+                    id: $('#Id').val(),
+                    nombre: $('#Nombre').val(),
+                    correo: $('#Correo').val(),
+                    rol: parseInt($('#Rol').val()),
+                    empresaId: parseInt($('#EmpresaId').val())
+                };
+                $.ajax({
+                    url: `/api/Usuarios/${id}`,
+                    type: 'PUT',
+                    contentType: 'application/json',
+                    data: JSON.stringify(usuario),
+                    success: function () {
+                        Swal.fire({
+                            title: '¡Éxito!',
+                            text: 'Usuario actualizado correctamente',
+                            icon: 'success'
+                        }).then(() => {
+                            window.location.href = '/Usuario/Index';
+                        });
+                    },
+                    error: function (xhr) {
+                        Swal.fire({
+                            title: 'Error',
+                            text: xhr.responseJSON?.mensaje || 'Error al actualizar el usuario',
+                            icon: 'error'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

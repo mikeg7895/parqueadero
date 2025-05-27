@@ -1,0 +1,26 @@
+@{
+    Layout = "_LayoutAuth";
+    ViewData["Title"] = "Login";
+}
+
+<div class="row mt-5">
+    <div class="col-sm-4 offset-sm-4">
+        <form method="post" asp-controller="Autenticacion" asp-action="Login">
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    @ViewBag.Error
+                </div>
+            }
+            <div class="mb-3">
+                <label for="email" class="form-label">Correo electronico</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Ingresar</button>
+        </form>
+    </div>
+</div>

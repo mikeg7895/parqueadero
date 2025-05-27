@@ -1,0 +1,150 @@
+@{
+    ViewData["Title"] = "Editar Vehículo";
+    var id = ViewBag.Id;
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 text-gray-800">Editar Vehículo</h1>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Volver
+        </a>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <form id="formEditarVehiculo">
+                <input type="hidden" id="id" value="@id">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="placa">Placa</label>
+                            <input type="text" class="form-control" id="placa" required>
+                            <div class="invalid-feedback">La placa es requerida</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="tipoVehiculo">Tipo de Vehículo</label>
+                            <select class="form-control" id="tipoVehiculo" required>
+                                <option value="">Seleccione un tipo de vehículo</option>
+                                <option value="0">Moto</option>
+                                <option value="1">Auto</option>
+                                <option value="2">Camioneta</option>
+                                <option value="3">Camión</option>
+                            </select>
+                            <div class="invalid-feedback">El tipo de vehículo es requerido</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="usuarioId">Usuario</label>
+                            <select class="form-control" id="usuarioId" required>
+                                <option value="">Seleccione un usuario</option>
+                            </select>
+                            <div class="invalid-feedback">El usuario es requerido</div>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-3">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Guardar Cambios
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            const vehiculoId = $('#id').val();
+            let usuarios = [];
+
+            // Cargar usuarios
+            $.get('/api/Usuarios')
+                .done(function(data) {
+                    usuarios = data;
+                    const select = $('#usuarioId');
+                    select.empty();
+                    select.append('<option value="">Seleccione un usuario</option>');
+                    data.forEach(function(usuario) {
+                        select.append('<option value="' + usuario.id + '">' + usuario.nombre + '</option>');
+                    });
+                    
+                    // Cargar datos del vehículo
+                    return $.get('/api/Vehiculos/' + vehiculoId)
+                    .done(function(vehiculo) {
+                        $('#placa').val(vehiculo.placa);
+                        $('#tipoVehiculo').val(vehiculo.tipoVehiculo);
+                        $('#usuarioId').val(vehiculo.usuarioId);
+                    })
+                    .fail(function(xhr) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'No se pudo cargar la información del vehículo o los usuarios'
+                        }).then(() => {
+                            window.location.href = '/Vehiculo';
+                        });
+                    });
+                })
+                .fail(function(xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'No se pudo cargar la información del vehículo o los usuarios'
+                    }).then(() => {
+                        window.location.href = '/Vehiculo';
+                    });
+                });
+
+            $('#formEditarVehiculo').on('submit', function(e) {
+                e.preventDefault();
+                
+                if (this.checkValidity() === false) {
+                    e.stopPropagation();
+                    $(this).addClass('was-validated');
+                    return;
+                }
+
+                const vehiculoData = {
+                    id: parseInt(vehiculoId),
+                    placa: $('#placa').val(),
+                    tipoVehiculo: parseInt($('#tipoVehiculo').val()),
+                    usuarioId: parseInt($('#usuarioId').val())
+                };
+
+                $.ajax({
+                    url: '/api/Vehiculos/' + vehiculoId,
+                    type: 'PUT',
+                    contentType: 'application/json',
+                    data: JSON.stringify(vehiculoData),
+                    success: function(response) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Éxito!',
+                            text: 'El vehículo ha sido actualizado correctamente',
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            window.location.href = '/Vehiculo/Index';
+                        });
+                    },
+                    error: function(xhr) {
+                        let errorMessage = 'Ocurrió un error al actualizar el vehículo';
+                        if (xhr.responseJSON && xhr.responseJSON.mensaje) {
+                            errorMessage = xhr.responseJSON.mensaje;
+                        }
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: errorMessage
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

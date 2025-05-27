@@ -1,0 +1,86 @@
+@{
+    ViewData["Title"] = "Vehículos";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 text-gray-800">Vehículos</h1>
+        <div>
+            <a asp-action="Crear" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Nuevo Vehículo
+            </a>
+            <a asp-controller="Dashboard" asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Volver
+            </a>
+        </div>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="vehiculosTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Placa</th>
+                            <th>Tipo de Vehículo</th>
+                            <th>Usuario</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            const tipoVehiculo = {
+                0: 'Moto',
+                1: 'Auto',
+                2: 'Camioneta',
+                3: 'Camión'
+            };
+
+            $('#vehiculosTable').DataTable({
+                ajax: {
+                    url: '/api/Vehiculos',
+                    dataSrc: ''
+                },
+                columns: [
+                    { data: 'placa' },
+                    { 
+                        data: 'tipoVehiculo',
+                        render: function(data) {
+                            return tipoVehiculo[data] || 'Desconocido';
+                        }
+                    },
+                    { 
+                        data: 'usuario',
+                        render: function(data) {
+                            return data ? data.nombre : 'No asignado';
+                        }
+                    },
+                    {
+                        data: 'id',
+                        render: function(data) {
+                            return `
+                                <div class="btn-group" role="group">
+                                    <a href="/Vehiculo/Editar/${data}" class="btn btn-info btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="/Vehiculo/Eliminar/${data}" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>`;
+                        }
+                    }
+                ],
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json'
+                }
+            });
+        });
+    </script>
+}

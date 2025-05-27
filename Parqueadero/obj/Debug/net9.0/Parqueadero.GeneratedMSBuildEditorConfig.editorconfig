@@ -1,0 +1,205 @@
+is_global = true
+build_property.TargetFramework = net9.0
+build_property.TargetFramework = net9.0
+build_property.TargetPlatformMinVersion = 
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = Parqueadero
+build_property.RootNamespace = Parqueadero
+build_property.ProjectDir = /workspaces/dotnet-postgres/Parqueadero/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 9.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = /workspaces/dotnet-postgres/Parqueadero
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 9.0
+build_property.EnableCodeStyleSeverity = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Autenticacion/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXV0ZW50aWNhY2lvbi9Mb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Dashboard/Admin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGFzaGJvYXJkL0FkbWluLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Dashboard/SuperAdmin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGFzaGJvYXJkL1N1cGVyQWRtaW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Dashboard/Trabajador.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGFzaGJvYXJkL1RyYWJhamFkb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Descuentos/Crear.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGVzY3VlbnRvcy9DcmVhci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Descuentos/Editar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGVzY3VlbnRvcy9FZGl0YXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Descuentos/Eliminar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGVzY3VlbnRvcy9FbGltaW5hci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Descuentos/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGVzY3VlbnRvcy9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Empresas/Crear.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW1wcmVzYXMvQ3JlYXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Empresas/Editar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW1wcmVzYXMvRWRpdGFyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Empresas/Eliminar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW1wcmVzYXMvRWxpbWluYXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Empresas/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW1wcmVzYXMvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Factura/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRmFjdHVyYS9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Parqueaderos/Crear.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGFycXVlYWRlcm9zL0NyZWFyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Parqueaderos/Editar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGFycXVlYWRlcm9zL0VkaXRhci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Parqueaderos/Eliminar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGFycXVlYWRlcm9zL0VsaW1pbmFyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Parqueaderos/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGFycXVlYWRlcm9zL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Parqueaderos/Zonas.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGFycXVlYWRlcm9zL1pvbmFzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/PlanesEspeciales/Crear.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGxhbmVzRXNwZWNpYWxlcy9DcmVhci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/PlanesEspeciales/Editar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGxhbmVzRXNwZWNpYWxlcy9FZGl0YXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/PlanesEspeciales/Eliminar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGxhbmVzRXNwZWNpYWxlcy9FbGltaW5hci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/PlanesEspeciales/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGxhbmVzRXNwZWNpYWxlcy9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Reserva/Crear.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVzZXJ2YS9DcmVhci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Reserva/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVzZXJ2YS9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Shared/_LayoutAuth.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXRBdXRoLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Tarifas/Crear.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGFyaWZhcy9DcmVhci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Tarifas/Editar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGFyaWZhcy9FZGl0YXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Tarifas/Eliminar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGFyaWZhcy9FbGltaW5hci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Tarifas/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGFyaWZhcy9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Usuario/Crear.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXN1YXJpby9DcmVhci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Usuario/Editar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXN1YXJpby9FZGl0YXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Usuario/Eliminar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXN1YXJpby9FbGltaW5hci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Usuario/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXN1YXJpby9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Vehiculo/Crear.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVmVoaWN1bG8vQ3JlYXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Vehiculo/Editar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVmVoaWN1bG8vRWRpdGFyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Vehiculo/Eliminar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVmVoaWN1bG8vRWxpbWluYXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Vehiculo/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVmVoaWN1bG8vSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/workspaces/dotnet-postgres/Parqueadero/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-cdyhalbxj4
